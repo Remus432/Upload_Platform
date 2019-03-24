@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <div id="particles-js">
+        
+    </div>
+    
+    <h1>SIGN UP</h1>
+    <form class="form"  enctype="multipart/form-data" action="/" method="POST">
+        <div class="form--input__group">
+            
+            <input class="form--email" name="email" type="email" placeholder="Email" required>
+            
+            <input class="form--password" name="password" type="password" placeholder="Password">
+        </div>
+        <div class="form--file">
+            <p>Choose File</p>
+            <input class="form--file" type="file" id="upload" name="item"/>
+        </div>
+        
+        <input class="form--btn"  type="submit">
+        <img src=""/>
+        <div class="box box-1"></div>
+        <div class="box box-2"></div>
+    </form>
+    
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+       particlesJS.load("particles-js", "./particles.json", () => console.log("Loaded"));</script>
+</body>
+</html>

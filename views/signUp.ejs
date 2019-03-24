@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./SCSS/main.css">
+</head>
+<body>
+
+    <div id="particles-js">
+            
+    </div>
+
+    <h1>SIGN UP</h1>
+    <form class="form"  enctype="multipart/form-data" action="/welcome" method="POST">
+        <div class="form--input__group">
+            
+            <input class="form--email" name="email" type="email" placeholder="Email" required>
+            
+            <input class="form--password" name="password" type="password" placeholder="Password">
+        </div>
+        <div class="form--file">
+            <p>Choose File</p>
+            <input type="file" id="upload" name="item"/>
+        </div>
+
+        <div class="form--preview"><span>X</span></div>
+        
+        <input class="form--btn"  type="submit">
+        
+        <div class="box box-1"></div>
+        <div class="box box-2"></div>
+    </form>
+
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script>
+        particlesJS.load("particles-js", "particles.json", () => console.log("Loaded"));
+        const socket = io();
+
+        const email = document.querySelector(".form--email");
+        const password = document.querySelector(".form--password");
+        const form = document.querySelector("form");
+        const file = document.querySelector("#upload");
+        const preview = document.createElement("img");
+        const delBtn = document.querySelector(".form--preview span");
+        const formFile = document.querySelector(".form--file");
+
+
+        delBtn.addEventListener("click", e => {
+            console.log(e.target.nextElementSibling);
+            e.target.nextElementSibling.remove();
+            formFile.style.opacity = "1";
+            e.target.parentElement.style.display = "none";
+        })
+
+        socket.on("connect", () => {
+            console.log("Connected");
+            console.log(file);
+         
+                file.addEventListener("change", e => {
+                
+
+                    let reader = new FileReader();
+
+                    reader.addEventListener("load", () => {
+                        preview.src = reader.result;
+                        document.querySelector(".form--preview").appendChild(preview);
+                        formFile.style.opacity = "0";
+                        document.querySelector(".form--preview").style.display = "block";
+                    }, false);
+
+                    if (e.target.files[0]) {
+                        reader.readAsDataURL(e.target.files[0]);
+                    }
+                })
+             
+            
+
+
+            form.addEventListener("submit", function(e) {
+                //e.preventDefault();
+
+                previewFile();
+                
+                
+            }, false);
+
+            function previewFile() {
+                    let reader  = new FileReader();
+
+                    reader.addEventListener("load", function () {
+                        let data = {
+                            email: email.value,
+                            password: password.value,
+                            avatar: reader.result
+                        };
+
+                        socket.emit("signUp", data);
+                        
+                        preview.src = reader.result;
+                    }, false);
+
+                    if (file) {
+                        reader.readAsDataURL(file.files[0]);
+
+                    }
+                }
+        })
+
+        
+    </script>
+</body>
+</html>

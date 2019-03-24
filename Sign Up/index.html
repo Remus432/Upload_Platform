@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/SCSS/main.css">
+</head>
+<body>
+
+    <div class="welcome">
+        <h1 class="welcome--heading welcome--heading__1">Hi.</h1>
+        <h2 class="welcome--heading welcome--heading__2">Let's get you started!</h2>
+
+        <div class="welcome--upload">
+            <label for="upload">Upload</label>
+            <input class="file" type="file" name="upload">
+            <video controls>
+                <source src=""/>
+            </video>
+        </div>
+    </div>
+
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+    <script>
+
+        $(document).on("change", ".file", function(evt) {
+            var $source = $('video source');
+            $source[0].src = URL.createObjectURL(this.files[0]);
+            $source.parent()[0].load();
+            console.log(console.log(URL.createObjectURL(this.files[0])));
+        });
+        
+        // Anime.js
+        let firstHeading = anime({
+            targets: ".welcome--heading__1",
+            translateY: "100px",
+            duration: 1500,
+            opacity: 1,
+            direction: "alternate",
+            complete: function(anim) {
+              
+                let secondHeading = anime({
+                    targets: ".welcome--heading__2",
+                    translateY: "100px",
+                    duration: 3000,
+                    opacity: 1,
+                    direction: "alternate",
+                    complete: function(anim) {
+
+                        let uploadBox = anime({
+                            targets: ".welcome--upload",
+                            translateY: "100px",
+                            opacity: 1,
+                            duration: 1500
+                        })
+
+                    }
+                })
+            }
+        })
+
+
+     
+
+        const colorArray = ["#f39c12", "#e74c3c", "#3498db", "#1abc9c", "#27ae60", "#f39c12", "#e74c3c", "#3498db", "#1abc9c", "#27ae60"];
+
+        setTimeout(() => {
+            
+
+            setInterval(() => {
+                const randNumb = Math.floor(Math.random() * 6);
+                document.querySelector(".welcome").style.backgroundColor = colorArray[randNumb];
+            }, 2000);
+        }, 1000);
+        
+    </script>
+
+</body>
+</html>

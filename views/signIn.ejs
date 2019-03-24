@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./SCSS/main.css">
+</head>
+<body>
+
+    <div id="particles-js">
+            
+    </div>
+
+    <h1>SIGN IN</h1>
+    <form class="form"  enctype="multipart/form-data" action="/" method="POST">
+        <p class="form--error"></p>
+        <div class="form--input__group">
+            
+            <input class="form--email" name="email" type="email" placeholder="Email" required>
+            
+            <input class="form--password" name="password" type="password" placeholder="Password">
+        </div>
+        
+        <input class="form--btn"  type="submit" value="Sign In">
+        <div class="box box-1"></div>
+        <div class="box box-2"></div>
+
+        <span class="form--span">Or</span>
+
+        <a class="form--signUp" href="/signUp">Create Account</a>
+    </form>
+
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script>
+        particlesJS.load("particles-js", "particles.json", () => console.log("Loaded"));
+       const socket = io();
+
+       const form = document.querySelector("form");
+       const email = document.querySelector(".form--email");
+       const password = document.querySelector(".form--password");
+       const errMsg = document.querySelector(".form--error");
+
+       // Connect WebSocket
+        socket.on("connect", () => {
+            console.log("connected");
+            // Add Submit Event For Form
+            form.addEventListener("submit", e => {
+                // Prevent Form From Submitting
+                e.preventDefault();
+
+                // Init Sign In Object
+                let data = {
+                    email: email.value,
+                    password: password.value
+                }
+
+                socket.emit("signIn", data);
+
+                 
+                
+            })
+
+            // Get Error Message
+            socket.on("error", data => {
+                    email.style.borderColor = "red";
+                    password.style.borderColor = "red";
+                    errMsg.innerHTML = data;
+            })
+        })
+
+        
+    </script>
+</body>
+</html>

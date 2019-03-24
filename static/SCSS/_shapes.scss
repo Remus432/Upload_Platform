@@ -1,0 +1,21 @@
+.box {
+    width: 150px;
+    height: 150px;
+    background-color: var(--bg-box);
+    position: absolute;
+    
+}
+
+.box-1 {
+    right: 0;
+    bottom: 0;
+    -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    clip-path: polygon(101% 0, 0% 101%, 101% 101%);
+}
+
+.box-2 {
+    top: 0;
+    left: 0;
+    -webkit-clip-path: polygon(0 0, 0% 100%, 100% 0);
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+}
